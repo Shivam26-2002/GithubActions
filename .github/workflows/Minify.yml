@@ -37,11 +37,20 @@ jobs:
           mv CSS/min.* minified/
       - name: Zip folder
         run: zip -r minified.zip minified/
+      - name: Upload minified folder
+        uses: actions/upload-artifact@v2
+        with:
+         name: minified_folder
+         path: ./minified
 
   unzip_and_echo:
     runs-on: ubuntu-latest
     needs: minify 
     steps:
+    - name: Download minified folder
+      uses: actions/download-artifact@v2
+      with:
+        name: minified_folder
     - name: Unzip folder
       run: unzip minified.zip -d unzipped
     - name: Echo file names
