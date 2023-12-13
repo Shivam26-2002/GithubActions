@@ -53,7 +53,7 @@ jobs:
         name: minified_folder
     - name : Name files
       run: |
-        echo ls
+          ls
     - name: Unzip folder
       run: unzip minified.zip -d unzipped
     - name: Echo file names
