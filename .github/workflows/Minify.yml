@@ -51,11 +51,11 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: minified_folder
-    - name: Unzip folder
-      run: unzip minified.zip -d unzipped
+    # - name: Unzip folder
+    #   run: unzip minified.zip -d unzipped
     - name: Echo file names
       run: |
-        cd unzipped
+        cd minified
         for file in $(ls); do
           echo $file
         done
