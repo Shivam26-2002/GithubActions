@@ -37,6 +37,9 @@ jobs:
           mv CSS/min.* minified/
       - name: Zip folder
         run: zip -r minified.zip minified/
+      - name : Name zip file
+        run: |
+          ls
       - name: Upload minified folder
         uses: actions/upload-artifact@v2
         with:
