@@ -55,7 +55,7 @@ jobs:
     #   run: unzip minified.zip -d unzipped
     - name: Echo file names
       run: |
-        cd minified_folder
+        cd minified
         for file in $(ls); do
           echo $file
         done
