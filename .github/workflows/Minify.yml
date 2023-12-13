@@ -26,7 +26,7 @@ jobs:
         run: |
           cd CSS
           for file in $(ls *.css | grep -v "1.css"); do
-            cssnano $file > min.$file
+            uglifycss $file > min.$file
           done
           cd ..
       - name: Create minified folder
