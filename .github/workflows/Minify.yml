@@ -15,7 +15,26 @@ jobs:
           npm install terser
           npm install -g uglifycss
           npm install -g uglify-js
-      - name: Minify JS and CSS files
+      - name: Minify JS files
         run: |
-          uglifyjs ../JS/1.js -m -c -o minified/
-        working-directory: ${{ github.workspace }}
+          cd JS
+          for file in $(ls *.js | grep -v "1.js"); do
+            uglifyjs $file -o min.$file
+          done
+          cd ..
+      - name: Minify CSS files
+        run: |
+          cd CSS
+          for file in $(ls *.css | grep -v "1.css"); do
+            cssnano $file > min.$file
+          done
+          cd ..
+      - name: Create minified folder
+        run: mkdir minified
+      - name: Move minified files to folder
+        run: |
+          mv JS/min.* minified/
+          mv CSS/min.* minified/
+      - name: Zip folder
+        run: zip -r minified.zip minified/
+            
