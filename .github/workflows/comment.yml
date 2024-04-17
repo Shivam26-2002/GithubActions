@@ -1,5 +1,7 @@
 name: PR comment
-on: workflow_dispatch
+on:
+  pull_request:
+    types: [opened, reopened]
 jobs:
   comment:
     runs-on: ubuntu-latest
