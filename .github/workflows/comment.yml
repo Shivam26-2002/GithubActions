@@ -2,19 +2,20 @@ name: PR comment
 on:
   pull_request:
     types: [opened, reopened]
+    # branches:
+    #   - main
 jobs:
-  comment:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: PR comment
+      - name: Add comment to PR
         env:
           URL: ${{ github.event.pull_request.comments_url }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-           curl \
+          curl \
             -X POST \
             $URL \
             -H "Content-Type: application/json" \
             -H "Authorization: token $GITHUB_TOKEN" \
-            --data '{ "body": "PR commented"}'
-         
+            --data '{ "body": "blah blah GITHUB_WORKFLOW_URL=https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}" }'
