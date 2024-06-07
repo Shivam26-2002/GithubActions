@@ -2,61 +2,71 @@ name: Minify files
 on:
  workflow_dispatch:
 jobs:
-  minify:
-    runs-on: ubuntu-latest
-    steps:
+  template-literal:
+   runs-on: ubuntu-latest
+   steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v4
         with:
          node-version: '14.x'
       - run: npm install
-      - name: Install dependencies
-        run: |
-          npm install terser
-          npm install -g uglifycss
-          npm install -g uglify-js
-      - name: Minify JS files
-        run: |
-          cd JS
-          for file in $(ls *.js | grep -v "1.js"); do
-            uglifyjs $file -o min.$file
-          done
-          cd ..
-      - name: Minify CSS files
-        run: |
-          cd CSS
-          for file in $(ls *.css | grep -v "1.css"); do
-            uglifycss $file > min.$file
-          done
-          cd ..
-      - name: Create minified folder
-        run: mkdir minified
-      - name: Move minified files to folder
-        run: |
-          mv JS/min.* minified/
-          mv CSS/min.* minified/
-      - name: Zip folder
-        run: zip -r minified.zip minified/
-      - name : Name zip file
-        run: |
-          ls
-      - name: Upload minified folder
-        uses: actions/upload-artifact@v2
-        with:
-         name: minified_folder
-         path: ./minified
+      - name: Print 
+        run: echo "Print"
+  
+  # minify:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #        node-version: '14.x'
+  #     - run: npm install
+  #     - name: Install dependencies
+  #       run: |
+  #         npm install terser
+  #         npm install -g uglifycss
+  #         npm install -g uglify-js
+  #     - name: Minify JS files
+  #       run: |
+  #         cd JS
+  #         for file in $(ls *.js | grep -v "1.js"); do
+  #           uglifyjs $file -o min.$file
+  #         done
+  #         cd ..
+  #     - name: Minify CSS files
+  #       run: |
+  #         cd CSS
+  #         for file in $(ls *.css | grep -v "1.css"); do
+  #           uglifycss $file > min.$file
+  #         done
+  #         cd ..
+  #     - name: Create minified folder
+  #       run: mkdir minified
+  #     - name: Move minified files to folder
+  #       run: |
+  #         mv JS/min.* minified/
+  #         mv CSS/min.* minified/
+  #     - name: Zip folder
+  #       run: zip -r minified.zip minified/
+  #     - name : Name zip file
+  #       run: |
+  #         ls
+  #     - name: Upload minified folder
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #        name: minified_folder
+  #        path: ./minified
 
-  unzip_and_echo:
-    runs-on: ubuntu-latest
-    needs: minify 
-    steps:
-    - name: Download minified folder
-      uses: actions/download-artifact@v2
-      with:
-        name: minified_folder
-    - name: Echo file names
-      run: |
-        for file in $(ls); do
-          echo $file
-        done
-            
+  # unzip_and_echo:
+  #   runs-on: ubuntu-latest
+  #   needs: minify 
+  #   steps:
+  #   - name: Download minified folder
+  #     uses: actions/download-artifact@v2
+  #     with:
+  #       name: minified_folder
+  #   - name: Echo file names
+  #     run: |
+  #       for file in $(ls); do
+  #         echo $file
+  #       done
