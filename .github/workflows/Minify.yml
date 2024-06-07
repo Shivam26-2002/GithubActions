@@ -1,6 +1,15 @@
 name: Minify files
 on:
  workflow_dispatch:
+  inputs:
+      platform:
+        required: true
+        type: choice
+        description: Defines which environment to build for
+        default: 'android'
+        options:
+          - 'ios'
+          - 'android'
 jobs:
   template-literal:
    runs-on: ubuntu-latest
@@ -13,18 +22,23 @@ jobs:
       - name: Print 
         run: echo "Print"
       - name: Test template literal
+        env:
+          PLATFORM: ${{ inputs.platform }}
         run: |
          npm install fs
          npm install @actions/core
          node - <<EOF
           let reportFilePath;
-          const platform = 'android';
+          const platform = process.env.PLATFORM;
+          console.log("Platform is: ",platform);
           if (platform === 'android') {
             reportFilePath = "${{github.workspace}}/nightwatch/JerrDenTowLinkAutomation/tests_output/mobile-app-tests/__LINUX_towlink_e2e_script.json";
           } else {
             reportFilePath = "${{github.workspace}}/nightwatch/JerrDenTowLinkAutomation/tests_output/mobile-app-tests/__MAC_towlink_e2e_script.json";
           }
-          console.log("Report Path is : ", reportFilePath); 
+          console.log("Report Path is : ", reportFilePath);
+          const ternary = `${{github.workspace}}/nightwatch/JerrDenTowLinkAutomation/tests_output/mobile-app-tests/${platform === 'android' ? '__LINUX_towlink_e2e_script.json' : '__MAC_towlink_e2e_script.json'}`;
+          console.log("Path is: ",ternary);
          EOF
   
   # minify:
