@@ -37,7 +37,7 @@ jobs:
             reportFilePath = "${{github.workspace}}/nightwatch/JerrDenTowLinkAutomation/tests_output/mobile-app-tests/__MAC_towlink_e2e_script.json";
           }
           console.log("Report Path is : ", reportFilePath);
-          const ternary = `${{github.workspace}}/nightwatch/JerrDenTowLinkAutomation/tests_output/mobile-app-tests/${platform === `android` ? `__LINUX_towlink_e2e_script.json` : `__MAC_towlink_e2e_script.json`}`;
+          const ternary = `${{github.workspace}}/nightwatch/JerrDenTowLinkAutomation/tests_output/mobile-app-tests/${platform === "android" ? "__LINUX_towlink_e2e_script.json" : "__MAC_towlink_e2e_script.json"}`;
           console.log("Path is: ",ternary);
          EOF
   
