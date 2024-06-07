@@ -12,6 +12,20 @@ jobs:
       - run: npm install
       - name: Print 
         run: echo "Print"
+      - name: Test template literal
+        run: |
+         npm install fs
+         npm install @actions/core
+         node - <<EOF
+          let reportFilePath;
+          const platform = 'android';
+          if (platform === 'android') {
+            reportFilePath = "${{github.workspace}}/nightwatch/JerrDenTowLinkAutomation/tests_output/mobile-app-tests/__LINUX_towlink_e2e_script.json";
+          } else {
+            reportFilePath = "${{github.workspace}}/nightwatch/JerrDenTowLinkAutomation/tests_output/mobile-app-tests/__MAC_towlink_e2e_script.json";
+          }
+          console.log("Report Path is : ", reportFilePath); 
+         EOF
   
   # minify:
   #   runs-on: ubuntu-latest
